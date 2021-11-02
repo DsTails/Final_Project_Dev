@@ -21,17 +21,20 @@ public class SimpleClassMenu : MonoBehaviour
 
     public void selectNode(string NodeName)
     {
+        
         for (int i = 0; i < classNodeMenu.sections.Length; i++)
         {
+            
             if (NodeName.Contains(classNodeMenu.sections[i].SectionName))
             {
+                
                 for (int j = 0; j < classNodeMenu.sections[i].nodes.Length; j++)
                 {
                     if (classNodeMenu.sections[i].nodes[j].nodeName == classNodeMenu.sections[i].currentNode)
                     {
                         classNodeMenu.sections[i].nodes[j].isSelected = false;
                         classNodeMenu.sections[i].currentNode = "";
-                        
+                        break;
                     }
                 }
             }
@@ -40,14 +43,18 @@ public class SimpleClassMenu : MonoBehaviour
 
         for (int i = 0; i < classNodeMenu.sections.Length; i++)
         {
+            
             if (NodeName.Contains(classNodeMenu.sections[i].SectionName))
             {
                 for(int j = 0; j < classNodeMenu.sections[i].nodes.Length; j++)
                 {
                     if(classNodeMenu.sections[i].nodes[j].nodeName == NodeName)
                     {
+                        
                         classNodeMenu.sections[i].currentNode = NodeName;
                         classNodeMenu.sections[i].nodes[j].isSelected = true;
+                        PlayerBase.instance.setJump(NodeName);
+                        break;
                     }
                 }
             }

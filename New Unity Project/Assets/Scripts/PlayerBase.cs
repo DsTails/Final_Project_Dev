@@ -101,9 +101,9 @@ public class PlayerBase : MonoBehaviour
         }
 
 
-        if (Input.GetButtonDown("Fire1") && fireDelay <= 0)
+        if (Input.GetButton("Fire1") && fireDelay <= 0)
         {
-            Debug.Log("FIRE");
+            
             GameObject newBullet = Instantiate(testBullet, firepoint.position, firepoint.rotation);
             newBullet.GetComponent<Rigidbody>().velocity = transform.forward * 10;
             fireDelay = rateOfFire;
@@ -140,15 +140,18 @@ public class PlayerBase : MonoBehaviour
             if(selectedJump == "")
             {
                 Debug.Log("NO JUMP ACTIVE");
-            } else if(selectedJump == "Rocket")
+            } else if(selectedJump == "RocketJump")
             {
                 Debug.Log("ROCKET JUMP ACTIVE");
                 rb.velocity = Vector3.up * jumpForce * 2;
-            } else if(selectedJump == "ZeroGrav")
+            } else if(selectedJump == "ZeroGravJump")
             {
                 rb.useGravity = false;
                 rb.velocity = Vector3.up * jumpForce * 1.5f;
                 Invoke("RestoreGrav", 1f);
+            } else if(selectedJump == "Jump")
+            {
+                rb.velocity = Vector3.up * jumpForce;
             }
         }
     }
@@ -167,5 +170,11 @@ public class PlayerBase : MonoBehaviour
     public void RestoreGrav()
     {
         rb.useGravity = true;
+    }
+
+    public void setJump(string jumpName)
+    {
+        Debug.Log("Setting Jump to " + jumpName);
+        selectedJump = jumpName;
     }
 }

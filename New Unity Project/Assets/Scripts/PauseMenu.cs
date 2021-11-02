@@ -70,7 +70,7 @@ public class PauseMenu : MonoBehaviour
     public void selectClass(int classIndex)
     {
         classType[] classes = (classType[])System.Enum.GetValues(typeof(classType));
-        Debug.Log(classes[classIndex]);
+        
         
             
         if (classes[classIndex] != PlayerBase.instance.selectedClass)
