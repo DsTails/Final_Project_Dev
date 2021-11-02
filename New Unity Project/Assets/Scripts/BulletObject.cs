@@ -6,6 +6,7 @@ public class BulletObject : MonoBehaviour
 {
     [SerializeField]
     float destroyTime;
+    public float damage;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,25 @@ public class BulletObject : MonoBehaviour
         if(destroyTime <= 0)
         {
             Destroy(this.gameObject);
+        }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.GetComponent<EnemyAI>())
+        {
+            EnemyAI hurtEnemy = other.gameObject.GetComponent<EnemyAI>();
+            hurtEnemy.hurtEnemy(damage);
+            Destroy(gameObject);
+        }
+        else if (other.gameObject.GetComponent<PlayerBase>())
+        {
+            PlayerBase.instance.hurtPlayer(damage);
+            Destroy(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 }

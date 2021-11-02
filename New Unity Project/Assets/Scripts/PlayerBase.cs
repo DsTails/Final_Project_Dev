@@ -21,11 +21,12 @@ public class PlayerBase : MonoBehaviour
     public LayerMask whatIsGround;
     bool isGrounded;
 
+    [Header("Jump Variables")]
     public int jumpCount;
     public float jumpForce;
-    int jumps;
     public float jumpTimer;
     float jumpTime;
+    int jumps;
 
     Vector3 moveVector;
 
@@ -35,7 +36,11 @@ public class PlayerBase : MonoBehaviour
     public GameObject testBullet;
     public float rateOfFire;
     float fireDelay;
-    
+
+    [Header("General Stats")]
+    public float health;
+    public float maxHealth;
+
 
     //Singleton Structure
     public static PlayerBase instance;
@@ -63,7 +68,7 @@ public class PlayerBase : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        
+        health = maxHealth;
     }
 
     // Update is called once per frame
@@ -176,5 +181,10 @@ public class PlayerBase : MonoBehaviour
     {
         Debug.Log("Setting Jump to " + jumpName);
         selectedJump = jumpName;
+    }
+
+    public void hurtPlayer(float damage)
+    {
+        health -= damage;
     }
 }

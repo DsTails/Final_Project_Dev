@@ -12,31 +12,49 @@ public enum enemyStates
 }
 public class EnemyAI : MonoBehaviour
 {
-    public enemyStates state;
     enemyStates defaultState;
+    [Header("Enemy State")]
+    public enemyStates state;
+
+    [Header("Chase Values")]
     public float chaseRadius;
     public float attackRadius;
 
-    public float moveSpeed;
+    public float moveSpeed, chaseSpeed, patrolSpeed;
     public float rateOfAttack;
     float attackTimer;
 
+    public float enemyMaxHealth;
+    public float enemyHealth;
+
+    [Header("Player Target Values")]
     [SerializeField]
     Transform target;
 
+    [Header("Patrol Values")]
     [SerializeField]
     Transform[] patrolPoints;
     public float minimumCheckpointRadius;
+    public float waitTime;
+    float waitTimer;
     int patrolIndex = 1;
 
-    
+    [Header("Miscellaneous")]
+    [SerializeField]
+    GameObject bullet;
 
+    [SerializeField]
+    Transform enemyFirepoint;
+
+    bool hasResetRot;
     Vector3 originalPosition;
+
     void Start()
     {
         defaultState = state;
         target = PlayerBase.instance.transform;
         originalPosition = transform.position;
+        enemyHealth = enemyMaxHealth;
     }
 
     // Update is called once per frame
@@ -72,6 +90,7 @@ public class EnemyAI : MonoBehaviour
 
     public void chaseTarget()
     {
+        transform.LookAt(target);
         transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * GamePause.deltaTime);
 
         if (Vector3.Distance(target.position, transform.position) < attackRadius)
@@ -83,7 +102,8 @@ public class EnemyAI : MonoBehaviour
         {
             if (attackTimer <= 0)
             {
-                Debug.Log("ATTACK");
+                GameObject newBullet = Instantiate(bullet, enemyFirepoint.position, enemyFirepoint.rotation);
+                newBullet.GetComponent<Rigidbody>().velocity = transform.forward * 10;
                 attackTimer = rateOfAttack;
             }
         }
@@ -95,32 +115,58 @@ public class EnemyAI : MonoBehaviour
         {
             //Change to chase state here
             state = enemyStates.chase;
+            hasResetRot = false;
         }
         else
         {
             //return to idle/patrol
             state = defaultState;
             //if idle, return to default position
-
+            if (!hasResetRot && state == enemyStates.patrol)
+            {
+                transform.LookAt(patrolPoints[patrolIndex]);
+                hasResetRot = true;
+            }
+            
         }
     }
 
     void patrol()
     {
-        transform.position = Vector3.MoveTowards(transform.position, patrolPoints[patrolIndex].position, moveSpeed * GamePause.deltaTime);
-        if(Vector3.Distance(transform.position, patrolPoints[patrolIndex].position) <= minimumCheckpointRadius)
+        if (waitTimer <= 0)
         {
-            //Move on to the next patrol point
-            patrolIndex++;
-            if(patrolIndex >= patrolPoints.Length)
+            transform.position = Vector3.MoveTowards(transform.position, patrolPoints[patrolIndex].position, moveSpeed * GamePause.deltaTime);
+            if (Vector3.Distance(transform.position, patrolPoints[patrolIndex].position) <= minimumCheckpointRadius)
             {
-                patrolIndex = 0;
+
+                //Move on to the next patrol point
+                patrolIndex++;
+                
+                if (patrolIndex >= patrolPoints.Length)
+                {
+                    patrolIndex = 0;
+                }
+                transform.LookAt(patrolPoints[patrolIndex]);
+                waitTimer = waitTime;
             }
+        }
+        else
+        {
+            waitTimer -= 1 * GamePause.deltaTime;
         }
     }
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(transform.position, chaseRadius);
+    }
+
+    public void hurtEnemy(float damageDealt)
+    {
+        enemyHealth -= damageDealt;
+        if(enemyHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
