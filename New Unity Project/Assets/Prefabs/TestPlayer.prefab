@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0babbf98df8fb346b3eebaa3008d157, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 0.5
   playerFeetPos: {fileID: 6626107270009544312}
   detectRadius: 0.42
   whatIsGround:
@@ -165,15 +165,15 @@ MonoBehaviour:
     m_Bits: 64
   jumpCount: 1
   jumpForce: 5
-  jumpTimer: 0
+  jumpTimer: 0.25
   firepoint: {fileID: 6626107271587156449}
   testBullet: {fileID: 2243067292497066973, guid: 4d57db2d0214c48438b471b6cfa9278a, type: 3}
   rateOfFire: 0.5
   health: 0
   maxHealth: 100
   selectedClass: 0
-  superJumpTimer: 0
-  selectedJump: ZeroGrav
+  superJumpTimer: 2
+  selectedJump: ZeroGravJump
 --- !u!1 &6626107271587156462
 GameObject:
   m_ObjectHideFlags: 0

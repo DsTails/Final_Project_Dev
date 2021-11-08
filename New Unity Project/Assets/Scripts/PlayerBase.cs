@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public enum classType
 {
     Simple,
@@ -27,6 +27,7 @@ public class PlayerBase : MonoBehaviour
     public float jumpTimer;
     float jumpTime;
     int jumps;
+    bool isJumping;
 
     Vector3 moveVector;
 
@@ -115,7 +116,11 @@ public class PlayerBase : MonoBehaviour
         }
 
         //Punch
-
+        if(health <= 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            health = maxHealth;
+        }
     }
 
     public void checkForJump()
@@ -123,7 +128,8 @@ public class PlayerBase : MonoBehaviour
         //Vertical Movement (Jumps)
         if (Input.GetButtonDown("Jump") && jumps > 0)
         {
-
+            isJumping = true;
+            jumpTime = jumpTimer;
             rb.velocity = Vector3.up * jumpForce;
             jumps--;
         }
@@ -131,7 +137,27 @@ public class PlayerBase : MonoBehaviour
 
         else if (Input.GetButtonDown("Jump") && isGrounded && jumps == 0)
         {
+            isJumping = true;
+            jumpTime = jumpTimer;
             rb.velocity = Vector3.up * jumpForce;
+        }
+
+        if (Input.GetButton("Jump") && isJumping)
+        {
+            if(jumpTime > 0)
+            {
+                rb.velocity = Vector3.up * jumpForce;
+                jumpTime -= GamePause.deltaTime;
+            }
+            else
+            {
+                isJumping = false;
+            }
+        }
+
+        if (Input.GetButtonUp("Jump"))
+        {
+            isJumping = false;
         }
 
         if (isGrounded)
