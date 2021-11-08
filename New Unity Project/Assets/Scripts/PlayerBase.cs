@@ -110,7 +110,7 @@ public class PlayerBase : MonoBehaviour
         {
             
             GameObject newBullet = Instantiate(testBullet, firepoint.position, firepoint.rotation);
-            newBullet.GetComponent<Rigidbody>().velocity = transform.forward * 10;
+            newBullet.GetComponent<Rigidbody>().velocity = transform.forward * 18;
             fireDelay = rateOfFire;
         }
 
