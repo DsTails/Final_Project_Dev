@@ -23,6 +23,13 @@ public class NodeNames
     
     public string nodeName;
     public bool isSelected;
+    public GameObject UIButton;
+}
+
+public class NodeButtons
+{
+    public GameObject buttonName;
+    public string ButtonName;
 }
 
 

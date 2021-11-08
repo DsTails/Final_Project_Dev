@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SimpleClassMenu : MonoBehaviour
 {
@@ -33,6 +34,7 @@ public class SimpleClassMenu : MonoBehaviour
                     if (classNodeMenu.sections[i].nodes[j].nodeName == classNodeMenu.sections[i].currentNode)
                     {
                         classNodeMenu.sections[i].nodes[j].isSelected = false;
+                        classNodeMenu.sections[i].nodes[j].UIButton.GetComponent<Button>().interactable = true;
                         classNodeMenu.sections[i].currentNode = "";
                         break;
                     }
@@ -53,6 +55,7 @@ public class SimpleClassMenu : MonoBehaviour
                         
                         classNodeMenu.sections[i].currentNode = NodeName;
                         classNodeMenu.sections[i].nodes[j].isSelected = true;
+                        classNodeMenu.sections[i].nodes[j].UIButton.GetComponent<Button>().interactable = false;
                         PlayerBase.instance.setJump(NodeName);
                         break;
                     }

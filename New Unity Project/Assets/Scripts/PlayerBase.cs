@@ -148,7 +148,7 @@ public class PlayerBase : MonoBehaviour
             } else if(selectedJump == "RocketJump")
             {
                 Debug.Log("ROCKET JUMP ACTIVE");
-                rb.velocity = Vector3.up * jumpForce * 2;
+                rb.velocity = Vector3.up * jumpForce * 2.2f;
             } else if(selectedJump == "ZeroGravJump")
             {
                 rb.useGravity = false;
