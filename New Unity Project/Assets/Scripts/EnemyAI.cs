@@ -49,6 +49,8 @@ public class EnemyAI : MonoBehaviour
     bool hasResetRot;
     Vector3 originalPosition;
 
+    public int upgradePointVal;
+
     void Start()
     {
         defaultState = state;
@@ -166,6 +168,7 @@ public class EnemyAI : MonoBehaviour
         enemyHealth -= damageDealt;
         if(enemyHealth <= 0)
         {
+            GameManager.instance.upgradePoints += upgradePointVal;
             Destroy(gameObject);
         }
     }

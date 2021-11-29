@@ -350,6 +350,8 @@ MonoBehaviour:
   chaseRadius: 5
   attackRadius: 4
   moveSpeed: 1
+  chaseSpeed: 0
+  patrolSpeed: 0
   rateOfAttack: 3
   enemyMaxHealth: 100
   enemyHealth: 0
@@ -359,5 +361,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   minimumCheckpointRadius: 2
+  waitTime: 0
   bullet: {fileID: 2243067292497066973, guid: 4d57db2d0214c48438b471b6cfa9278a, type: 3}
   enemyFirepoint: {fileID: 6038252851358409332}
+  upgradePointVal: 10

@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbaac96efc4721b4296aea1411d7b333, type: 3}
+  m_Name: Class Upgrade Data
+  m_EditorClassIdentifier: 
+  classSystems:
+  - systemType: Simple
+    classSections:
+    - sectionName: Jump
+      Upgrades:
+      - upgradeName: Jump
+        upgradeDescription: A basic, easy jump that allows for a little more control
+        upgradeUnlocked: 1
+        starterUpgrade: 1
+        upgradeCost: 0
+        hasLevels: 0
+        upgradeLevel: 0
+        levels: []
+      - upgradeName: RocketJump
+        upgradeDescription: A higher jump that instantly shoots you into the stratosphere,
+          but sacrifices control
+        upgradeUnlocked: 0
+        starterUpgrade: 0
+        upgradeCost: 0
+        hasLevels: 0
+        upgradeLevel: 0
+        levels: []
+      - upgradeName: ZeroGravJump
+        upgradeDescription: A floaty jump that allows for greater control and traverses
+          large chasms, but doesn't go too high
+        upgradeUnlocked: 0
+        starterUpgrade: 0
+        upgradeCost: 0
+        hasLevels: 0
+        upgradeLevel: 0
+        levels: []
+    - sectionName: Special
+      Upgrades: []
+    - sectionName: Melee
+      Upgrades: []
+    - sectionName: 
+      Upgrades: []
+  - systemType: Dynamic
+    classSections: []

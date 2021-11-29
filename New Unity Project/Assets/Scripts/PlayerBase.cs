@@ -12,6 +12,7 @@ public class PlayerBase : MonoBehaviour
 {
     Rigidbody rb;
     public float speed;
+    float defaultSpeed;
     Vector3 moveInput;
 
     [Header("Ground Checks")]
@@ -24,6 +25,7 @@ public class PlayerBase : MonoBehaviour
     [Header("Jump Variables")]
     public int jumpCount;
     public float jumpForce;
+    float defaultJumpForce;
     public float jumpTimer;
     float jumpTime;
     int jumps;
@@ -70,6 +72,7 @@ public class PlayerBase : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         health = maxHealth;
+        defaultSpeed = speed;
     }
 
     // Update is called once per frame
@@ -175,11 +178,13 @@ public class PlayerBase : MonoBehaviour
             {
                 Debug.Log("ROCKET JUMP ACTIVE");
                 rb.velocity = Vector3.up * jumpForce * 2.2f;
+                speed = speed / 4;
+                Invoke("resetSpeed", 2f);
             } else if(selectedJump == "ZeroGravJump")
             {
                 rb.useGravity = false;
-                rb.velocity = Vector3.up * jumpForce * 1.5f;
-                Invoke("RestoreGrav", 1f);
+                jumpForce *= 1.5f;
+                Invoke("RestoreGrav", 4f);
             } else if(selectedJump == "Jump")
             {
                 rb.velocity = Vector3.up * jumpForce;
@@ -212,5 +217,10 @@ public class PlayerBase : MonoBehaviour
     public void hurtPlayer(float damage)
     {
         health -= damage;
+    }
+
+    void resetSpeed()
+    {
+        speed = defaultSpeed;
     }
 }
