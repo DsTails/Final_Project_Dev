@@ -30,16 +30,24 @@ MonoBehaviour:
           but sacrifices control
         upgradeUnlocked: 0
         starterUpgrade: 0
-        upgradeCost: 0
+        upgradeCost: 10
         hasLevels: 0
         upgradeLevel: 0
-        levels: []
+        levels:
+        - levelCost: 0
+          levelIncrease: 1
+        - levelCost: 0
+          levelIncrease: 0
+        - levelCost: 0
+          levelIncrease: 0
+        - levelCost: 0
+          levelIncrease: 0
       - upgradeName: ZeroGravJump
         upgradeDescription: A floaty jump that allows for greater control and traverses
           large chasms, but doesn't go too high
         upgradeUnlocked: 0
         starterUpgrade: 0
-        upgradeCost: 0
+        upgradeCost: 20
         hasLevels: 0
         upgradeLevel: 0
         levels: []

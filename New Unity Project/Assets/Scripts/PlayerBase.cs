@@ -25,6 +25,7 @@ public class PlayerBase : MonoBehaviour
     [Header("Jump Variables")]
     public int jumpCount;
     public float jumpForce;
+    public float rocketJumpMult;
     float defaultJumpForce;
     public float jumpTimer;
     float jumpTime;
@@ -183,8 +184,8 @@ public class PlayerBase : MonoBehaviour
             } else if(selectedJump == "ZeroGravJump")
             {
                 rb.useGravity = false;
-                jumpForce *= 1.5f;
-                Invoke("RestoreGrav", 4f);
+                jumpForce *= 1.15f;
+                Invoke("RestoreGrav", 3.5f);
             } else if(selectedJump == "Jump")
             {
                 rb.velocity = Vector3.up * jumpForce;

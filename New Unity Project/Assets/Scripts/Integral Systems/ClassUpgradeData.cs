@@ -49,6 +49,6 @@ namespace classUpgrades
     public class upgradeLevels
     {
         public int levelCost;
-        public int levelIncrease;
+        public float levelIncrease;
     }
 }
