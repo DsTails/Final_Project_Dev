@@ -90,6 +90,8 @@ public class PlayerBase : MonoBehaviour
 
         moveVector = (transform.forward * moveInput.z * speed) + (transform.right * moveInput.x * speed);
         moveVector *= GamePause.deltaTime;
+
+        
     }
 
     private void Update()
@@ -125,6 +127,8 @@ public class PlayerBase : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             health = maxHealth;
         }
+
+        transform.position += moveVector;
     }
 
     public void checkForJump()
@@ -193,11 +197,7 @@ public class PlayerBase : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
-    {
-        //rb.velocity = new Vector3(moveInput.x * speed, rb.velocity.y, moveInput.z * speed);
-        transform.localPosition += moveVector;
-    }
+    
 
     private void OnDrawGizmosSelected()
     {

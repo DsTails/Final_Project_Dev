@@ -1269,7 +1269,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Final Project Prototype
+  m_Text: 'Final Project Prototype:
+
+    Defense from the breach
+
+    (Working title)'
 --- !u!222 &1517067285
 CanvasRenderer:
   m_ObjectHideFlags: 0
