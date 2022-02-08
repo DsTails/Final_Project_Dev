@@ -104,7 +104,7 @@ public class PlayerBase : MonoBehaviour
 
         //PlayerRotation Based on Mouse Movement
 
-        transform.Rotate(transform.rotation.x, Input.GetAxis("Mouse X"), transform.rotation.z);
+        //transform.Rotate(transform.rotation.x, Input.GetAxis("Mouse X"), transform.rotation.z);
 
         //Attacks (Shooting)
         if(fireDelay > 0)

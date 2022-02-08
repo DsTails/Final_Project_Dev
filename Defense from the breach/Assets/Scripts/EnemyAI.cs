@@ -51,6 +51,8 @@ public class EnemyAI : MonoBehaviour
 
     public int upgradePointVal;
 
+    public bool isStrafing, canStrafe;
+
     void Start()
     {
         defaultState = state;
@@ -171,5 +173,11 @@ public class EnemyAI : MonoBehaviour
             GameManager.instance.upgradePoints += upgradePointVal;
             Destroy(gameObject);
         }
+    }
+
+
+    public void approachDecision()
+    {
+
     }
 }
