@@ -19,6 +19,10 @@ public class CameraControls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GamePause.paused)
+        {
+            return;
+        }
         float xMouse = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
         float yMouse = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
 
@@ -29,7 +33,9 @@ public class CameraControls : MonoBehaviour
         transform.localRotation = Quaternion.Euler(xRot, 0f, 0f);
         playerChar.Rotate(Vector3.up * xMouse);
 
-        //firepointOrigin.localRotation = Quaternion.Euler(xRot, 0f, 0f);
+        
+
+        //firepointOrigin.Rotate(vec)
         //firepointOrigin.RotateAround(playerChar.position, new Vector3(xRot, 0f, 0f), 0);
     }
 }
