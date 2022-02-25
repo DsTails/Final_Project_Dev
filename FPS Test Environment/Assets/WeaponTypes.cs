@@ -35,12 +35,13 @@ public class WeaponTypes : MonoBehaviour
     double burstFireRate;
     
     double chosenFireRate;
-    [SerializeField] float recoilModifier;
+    [SerializeField] float recoilTime;
     [SerializeField] float stability;
     [SerializeField] Vector3 deviationVal;
 
     [SerializeField] Vector3 recoil;
-    Vector3 recoilStart;
+    Vector3 recoilStart, recoilOrigin;
+    [SerializeField] Vector3 recoilPeak;
 
     // Start is called before the first frame update
     void Start()
@@ -53,7 +54,7 @@ public class WeaponTypes : MonoBehaviour
         //fireRateVal = fireRate;
         AmmoCount = MaxAmmoCount;
         rateOfReload = (reloadSpeed / maxReloadSpeed) * 5;
-      
+        recoilOrigin = Vector3.zero;
     }
 
     // Update is called once per frame
@@ -171,6 +172,7 @@ public class WeaponTypes : MonoBehaviour
     void AddRecoil()
     {
         var recoilStart = transform.localEulerAngles;
+        
         var recoilProduct = transform.localEulerAngles + recoil;
 
         /*var recoilEnd = new Vector3(
@@ -179,18 +181,16 @@ public class WeaponTypes : MonoBehaviour
             recoilStart.z
             );*/
 
-        var recoilEnd = new Vector3(
-            Mathf.SmoothStep(recoilStart.x, recoilProduct.x, 1),
-            Mathf.SmoothStep(recoilStart.y, recoilProduct.y, 1),
-            recoilStart.z
-            );
+        StartCoroutine(recoilTransition(recoilStart, recoilProduct));
 
-        transform.localEulerAngles = recoilEnd;
+        ResetRecoil();
+
     }
 
     void ResetRecoil()
     {
-
+        
+        transform.localEulerAngles = recoilOrigin;
     }
 
     #endregion
@@ -207,6 +207,40 @@ public class WeaponTypes : MonoBehaviour
         GameObject shootBullet = Instantiate(bulletPrefab, muzzleEnd.position, muzzleEnd.rotation);
         shootBullet.GetComponent<Rigidbody>().velocity = transform.forward * bulletSpeed;
         AmmoCount -= 1;
+    }
+
+    public IEnumerator recoilTransition(Vector3 recoilStart, Vector3 recoilProduct)
+    {
+        
+        float TimePercentage = 0f;
+        while(TimePercentage < 1)
+        {
+            TimePercentage += Time.deltaTime / recoilTime;
+            transform.localEulerAngles = Vector3.Lerp(recoilStart, recoilProduct, TimePercentage);
+            recoilPeak = transform.localEulerAngles;
+            yield return null;
+        }
+
+        
+
+        yield return new WaitForSeconds(.15f);
+        StartCoroutine(recoilResetTransition(recoilPeak, recoilProduct));
+
+        
+    }
+
+    
+
+    public IEnumerator recoilResetTransition(Vector3 currentRecoil, Vector3 recoilResetPos)
+    {
+        
+        float TimePercentage = 1f;
+        while(TimePercentage > 0)
+        {
+            TimePercentage -= Time.deltaTime / recoilTime;
+            transform.localEulerAngles = Vector3.Lerp(currentRecoil, recoilResetPos, TimePercentage);
+            yield return null;
+        }
     }
 
     #endregion

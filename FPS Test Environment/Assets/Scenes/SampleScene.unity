@@ -182,10 +182,11 @@ MonoBehaviour:
   rateOfReload: 0
   RoundsPerSec: 0
   fireRate: 0
-  recoilModifier: 0
+  recoilTime: 0.25
   stability: 0
   deviationVal: {x: 0, y: 0, z: 0}
   recoil: {x: -2, y: -2, z: 0}
+  recoilPeak: {x: 0, y: 0, z: 0}
 --- !u!65 &577832887
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -527,10 +528,11 @@ MonoBehaviour:
   rateOfReload: 0
   RoundsPerSec: 0
   fireRate: 0
-  recoilModifier: 0
+  recoilTime: 0
   stability: 0
   deviationVal: {x: 0, y: 0, z: 0}
   recoil: {x: 0, y: 0, z: 0}
+  recoilPeak: {x: 0, y: 0, z: 0}
 --- !u!65 &1593511160
 BoxCollider:
   m_ObjectHideFlags: 0
