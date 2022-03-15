@@ -21,6 +21,8 @@ public class WeaponTypes : MonoBehaviour
     [SerializeField] Transform muzzleEnd;
     public float bulletSpeed = 30;
 
+
+    public int AmmoHeld;
     public int MaxAmmoCount;
     [SerializeField]int AmmoCount;
 
@@ -43,6 +45,9 @@ public class WeaponTypes : MonoBehaviour
     Vector3 recoilStart, recoilOrigin;
     [SerializeField] Vector3 recoilPeak;
 
+    CameraController cam;
+    [SerializeField] Transform player;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +60,7 @@ public class WeaponTypes : MonoBehaviour
         AmmoCount = MaxAmmoCount;
         rateOfReload = (reloadSpeed / maxReloadSpeed) * 5;
         recoilOrigin = Vector3.zero;
+        cam = FindObjectOfType<CameraController>();
     }
 
     // Update is called once per frame
@@ -134,7 +140,11 @@ public class WeaponTypes : MonoBehaviour
     {
         if (Input.GetButtonDown("Reload"))
         {
-            StartCoroutine(reloadWeapon());
+            if (AmmoHeld > 0 && AmmoCount < MaxAmmoCount)
+            {
+                
+                StartCoroutine(reloadWeapon());
+            }
         }
     }
     #endregion
@@ -171,9 +181,11 @@ public class WeaponTypes : MonoBehaviour
 
     void AddRecoil()
     {
-        var recoilStart = transform.localEulerAngles;
+        var recoilStart = cam.transform.localEulerAngles;
         
-        var recoilProduct = transform.localEulerAngles + recoil;
+        var recoilProduct = cam.transform.localEulerAngles + recoil;
+
+        var recoilMidpoint = recoilStart + (recoilProduct - recoilStart) / 2;
 
         /*var recoilEnd = new Vector3(
             Mathf.LerpAngle(recoilStart.x, recoilProduct.x, 3 * Time.deltaTime),
@@ -183,23 +195,54 @@ public class WeaponTypes : MonoBehaviour
 
         StartCoroutine(recoilTransition(recoilStart, recoilProduct));
 
-        ResetRecoil();
-
-    }
-
-    void ResetRecoil()
-    {
         
-        transform.localEulerAngles = recoilOrigin;
+
+        //StartCoroutine(recoilResetTransition(recoilPeak, recoilMidpoint));
+
     }
+
+    
 
     #endregion
 
     #region Utility Methods
     public IEnumerator reloadWeapon()
     {
+        
+
         yield return new WaitForSeconds(rateOfReload);
-        AmmoCount = MaxAmmoCount;
+
+        if(AmmoHeld > MaxAmmoCount)
+        {
+            if(AmmoCount == 0)
+            {
+                AmmoCount = MaxAmmoCount;
+                AmmoHeld -= MaxAmmoCount;
+            }
+            else
+            {
+                var AmmoToAdd = MaxAmmoCount - AmmoCount;
+                AmmoCount += AmmoToAdd;
+                AmmoHeld -= AmmoToAdd;
+            }
+            
+        }
+        else
+        {
+            var AmmoToReload = AmmoHeld;
+            if (AmmoCount == 0)
+            {
+                
+                AmmoCount = AmmoToReload;
+                AmmoHeld -= AmmoToReload;
+            }
+            else
+            {
+                AmmoCount += AmmoToReload;
+                AmmoHeld -= AmmoToReload;
+            }
+        }
+        
     }
 
     void createBullet()
@@ -212,33 +255,33 @@ public class WeaponTypes : MonoBehaviour
     public IEnumerator recoilTransition(Vector3 recoilStart, Vector3 recoilProduct)
     {
         
+
         float TimePercentage = 0f;
         while(TimePercentage < 1)
         {
             TimePercentage += Time.deltaTime / recoilTime;
-            transform.localEulerAngles = Vector3.Lerp(recoilStart, recoilProduct, TimePercentage);
-            recoilPeak = transform.localEulerAngles;
+            //cam.transform.localEulerAngles = Vector3.Lerp(recoilStart, recoilProduct, TimePercentage);
+            cam.transform.localEulerAngles = new Vector3(Mathf.Lerp(recoilStart.x, recoilProduct.x, TimePercentage),
+                Mathf.Lerp(recoilStart.y, recoilProduct.y, TimePercentage), cam.transform.localEulerAngles.z);
+            
+            recoilPeak = cam.transform.localEulerAngles;
             yield return null;
         }
-
-        
-
-        yield return new WaitForSeconds(.15f);
-        StartCoroutine(recoilResetTransition(recoilPeak, recoilProduct));
-
-        
+        cam.xRot += recoil.x;
     }
 
     
 
     public IEnumerator recoilResetTransition(Vector3 currentRecoil, Vector3 recoilResetPos)
     {
+        yield return new WaitForSeconds(.18f);
         
         float TimePercentage = 1f;
         while(TimePercentage > 0)
         {
             TimePercentage -= Time.deltaTime / recoilTime;
-            transform.localEulerAngles = Vector3.Lerp(currentRecoil, recoilResetPos, TimePercentage);
+            //cam.transform.localEulerAngles = Vector3.Lerp(recoilResetPos, currentRecoil, TimePercentage);
+            cam.transform.localEulerAngles = new Vector3(Mathf.Lerp(recoilResetPos.x, currentRecoil.x, TimePercentage), cam.transform.localEulerAngles.y, cam.transform.localEulerAngles.z);
             yield return null;
         }
     }

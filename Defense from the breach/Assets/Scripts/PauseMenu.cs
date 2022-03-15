@@ -78,6 +78,7 @@ public class PauseMenu : MonoBehaviour
         if (classes[classIndex] != PlayerBase.instance.selectedClass)
         {
             PlayerBase.instance.selectedClass = classes[classIndex];
+            PlayerBase.instance.activateClass(classes[classIndex]);
 
             for(int i = 0; i < classes.Length; i++)
             {

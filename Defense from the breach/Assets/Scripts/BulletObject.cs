@@ -14,6 +14,11 @@ public class BulletObject : MonoBehaviour
         
     }
 
+    public virtual void setDamage(int damage)
+    {
+
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -25,7 +30,7 @@ public class BulletObject : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision other)
+    public virtual void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.GetComponent<EnemyAI>())
         {

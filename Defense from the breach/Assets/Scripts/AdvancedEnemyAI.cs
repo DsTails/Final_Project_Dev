@@ -52,6 +52,9 @@ public class AdvancedEnemyAI : MonoBehaviour
     [Header("Enemy Stats")]
     public float enemyMaxHealth;
     public float enemyHealth;
+    public bool hasArmour;
+    public float ArmourDurability;
+    float defaultArmDurability;
 
     [Header("Wait Timers")]
     public float waitTimer;
@@ -256,6 +259,50 @@ public class AdvancedEnemyAI : MonoBehaviour
         else
         {
             patrolWaitTime -= 1 * GamePause.deltaTime;
+        }
+    }
+
+
+    public void TakeDamage(float DamageTaken, bool concentratedShot)
+    {
+        /*if (check for armour is true THEN) { 
+         * 
+         * if(ArmourDur > 0){
+         *      damage the armour
+         * } else{
+         *      damage the enemy
+         * }
+         * 
+         * }*/
+
+        if (concentratedShot)
+        {
+            if (hasArmour)
+            {
+                //If it has armour, check if they have armour left
+                if(ArmourDurability > 0)
+                {
+                    ArmourDurability -= DamageTaken;
+                }
+                else
+                {
+                    //Determine whether or not it is ineffective against non-armoured enemies or enemies who have lost their armour
+                }
+            }
+            else
+            {
+
+            }
+        }
+        else
+        {
+            if (hasArmour)
+            {
+                if(ArmourDurability > 0)
+                {
+                    //Make it impossible for the player to damage armoured enemies with normal weapons
+                }
+            }
         }
     }
 

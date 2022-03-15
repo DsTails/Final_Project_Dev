@@ -51,11 +51,105 @@ MonoBehaviour:
         hasLevels: 0
         upgradeLevel: 0
         levels: []
-    - sectionName: Special
-      Upgrades: []
-    - sectionName: Melee
-      Upgrades: []
+    - sectionName: Dodge
+      Upgrades:
+      - upgradeName: SideStepDodge
+        upgradeDescription: 
+        upgradeUnlocked: 1
+        starterUpgrade: 1
+        upgradeCost: 0
+        hasLevels: 0
+        upgradeLevel: 0
+        levels: []
+      - upgradeName: BackPaceDodge
+        upgradeDescription: 
+        upgradeUnlocked: 0
+        starterUpgrade: 0
+        upgradeCost: 0
+        hasLevels: 0
+        upgradeLevel: 0
+        levels: []
+    - sectionName: Buff
+      Upgrades:
+      - upgradeName: MoveSpeedBuff
+        upgradeDescription: 
+        upgradeUnlocked: 1
+        starterUpgrade: 1
+        upgradeCost: 0
+        hasLevels: 0
+        upgradeLevel: 0
+        levels: []
+      - upgradeName: HeightBuff
+        upgradeDescription: 
+        upgradeUnlocked: 1
+        starterUpgrade: 1
+        upgradeCost: 0
+        hasLevels: 0
+        upgradeLevel: 0
+        levels: []
     - sectionName: 
       Upgrades: []
   - systemType: Dynamic
-    classSections: []
+    classSections:
+    - sectionName: Concentrated Spec
+      Upgrades:
+      - upgradeName: Concentrated Spec - Missile Barrage
+        upgradeDescription: 
+        upgradeUnlocked: 0
+        starterUpgrade: 0
+        upgradeCost: 0
+        hasLevels: 0
+        upgradeLevel: 0
+        levels: []
+      - upgradeName: Concentrated Spec - Enhanced Might
+        upgradeDescription: 
+        upgradeUnlocked: 0
+        starterUpgrade: 0
+        upgradeCost: 0
+        hasLevels: 0
+        upgradeLevel: 0
+        levels: []
+    - sectionName: Strengthen
+      Upgrades:
+      - upgradeName: Strengthen - Weapon Damage
+        upgradeDescription: 
+        upgradeUnlocked: 0
+        starterUpgrade: 0
+        upgradeCost: 0
+        hasLevels: 0
+        upgradeLevel: 0
+        levels: []
+      - upgradeName: Strengthen - Projectile Damage
+        upgradeDescription: 
+        upgradeUnlocked: 0
+        starterUpgrade: 0
+        upgradeCost: 0
+        hasLevels: 0
+        upgradeLevel: 0
+        levels: []
+    - sectionName: Ordnance
+      Upgrades:
+      - upgradeName: Ordnance - Almighty Wave
+        upgradeDescription: 
+        upgradeUnlocked: 0
+        starterUpgrade: 0
+        upgradeCost: 0
+        hasLevels: 0
+        upgradeLevel: 0
+        levels: []
+      - upgradeName: Ordnance - Splitter Frag
+        upgradeDescription: 
+        upgradeUnlocked: 0
+        starterUpgrade: 0
+        upgradeCost: 0
+        hasLevels: 0
+        upgradeLevel: 0
+        levels: []
+      - upgradeName: Ordnance - Spinning Orb
+        upgradeDescription: 
+        upgradeUnlocked: 0
+        starterUpgrade: 0
+        upgradeCost: 0
+        hasLevels: 0
+        upgradeLevel: 0
+        levels: []

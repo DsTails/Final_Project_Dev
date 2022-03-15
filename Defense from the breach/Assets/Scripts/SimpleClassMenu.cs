@@ -78,7 +78,9 @@ public class SimpleClassMenu : MonoBehaviour
                         classNodeMenu.sections[i].nodes[j].isSelected = true;
                         classNodeMenu.sections[i].nodes[j].UIButton.GetComponent<Button>().interactable = false;
                         classNodeMenu.sections[i].nodes[j].UIButton.GetComponent<Button>().image.rectTransform.sizeDelta = transformSize;
-                        PlayerBase.instance.setJump(NodeName);
+                        //PlayerBase.instance.setJump(NodeName);
+                        
+                        PlayerBase.instance.setAbility(NodeName);
                         break;
                     }
                 }
@@ -90,15 +92,18 @@ public class SimpleClassMenu : MonoBehaviour
 
     public void selectClassNode(string nodeName)
     {
+        
         //Cycle through both class system arrays
-        for(int i = 0; i < upgradeData.runtimeData.Length; i++)
+        for (int i = 0; i < upgradeData.runtimeData.Length; i++)
         {
+            
             //Cycle through the sections for the current class system
             for(int j = 0; j < upgradeData.runtimeData[i].classSections.Length; j++)
             {
                 //if the current section's name is found in the selected node, then check the upgrades found there
                 if (nodeName.Contains(upgradeData.runtimeData[i].classSections[j].sectionName))
                 {
+                    
                     for(int k = 0; k < upgradeData.runtimeData[i].classSections[j].Upgrades.Length; k++)
                     {
                         //if the selected upgrade matches the current name
@@ -117,6 +122,7 @@ public class SimpleClassMenu : MonoBehaviour
                                 }
                                 else
                                 {
+                                    
                                     selectNode(nodeName);
                                 }
                             }

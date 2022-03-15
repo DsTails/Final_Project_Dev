@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    float xRot = 0;
+    public float xRot = 0;
 
     public float sensitivity;
+    public Transform playerBody;
+
     void Start()
     {
         
@@ -21,6 +23,7 @@ public class CameraController : MonoBehaviour
         xRot -= yMouse;
         xRot = Mathf.Clamp(xRot, -90f, 90f);
 
-        transform.localRotation = Quaternion.Euler(xRot, xMouse, 0f);
+        transform.localRotation = Quaternion.Euler(xRot, 0f, 0f);
+        playerBody.Rotate(Vector3.up * xMouse);
     }
 }

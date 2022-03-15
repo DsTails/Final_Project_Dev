@@ -12,7 +12,7 @@ public class PlayerBase : MonoBehaviour
 {
     Rigidbody rb;
     public float speed;
-    float defaultSpeed;
+    public float defaultSpeed;
     Vector3 moveInput;
 
     [Header("Ground Checks")]
@@ -34,12 +34,12 @@ public class PlayerBase : MonoBehaviour
 
     Vector3 moveVector;
 
-    [Header("Shooting Mechanic")]
-    [SerializeField]
-    Transform firepoint;
-    public GameObject testBullet;
-    public float rateOfFire;
-    float fireDelay;
+    [Header("Buff Modifiers")]
+    public float speedModifier;
+    public float jumpModifier;
+
+    SimpleClassAbilities SimpleAbilities;
+    DynamicClassAbilities DynamicAbilities;
 
     [Header("General Stats")]
     public float health;
@@ -74,6 +74,8 @@ public class PlayerBase : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         health = maxHealth;
         defaultSpeed = speed;
+        SimpleAbilities = GetComponent<SimpleClassAbilities>();
+        DynamicAbilities = GetComponent<DynamicClassAbilities>();
     }
 
     // Update is called once per frame
@@ -106,20 +108,7 @@ public class PlayerBase : MonoBehaviour
 
         //transform.Rotate(transform.rotation.x, Input.GetAxis("Mouse X"), transform.rotation.z);
 
-        //Attacks (Shooting)
-        if(fireDelay > 0)
-        {
-            fireDelay -= GamePause.deltaTime;
-        }
-
-
-        if (Input.GetButton("Fire1") && fireDelay <= 0)
-        {
-            
-            GameObject newBullet = Instantiate(testBullet, firepoint.position, firepoint.rotation);
-            newBullet.GetComponent<Rigidbody>().velocity = transform.forward * 18;
-            fireDelay = rateOfFire;
-        }
+        
 
         //Punch
         if(health <= 0)
@@ -130,6 +119,8 @@ public class PlayerBase : MonoBehaviour
 
         transform.position += moveVector;
     }
+
+    #region Jump
 
     public void checkForJump()
     {
@@ -172,56 +163,55 @@ public class PlayerBase : MonoBehaviour
         {
             jumps = jumpCount;
         }
+        
+    }
 
-        //Experimental: Super Jump Ability
-        if (Input.GetKeyDown(KeyCode.O))
+    #endregion
+
+    
+
+    #region Ability/Class Setting
+    public void activateClass(classType selectedClass)
+    {
+        if(selectedClass == classType.Simple)
         {
-            if(selectedJump == "")
-            {
-                Debug.Log("NO JUMP ACTIVE");
-            } else if(selectedJump == "RocketJump")
-            {
-                Debug.Log("ROCKET JUMP ACTIVE");
-                rb.velocity = Vector3.up * jumpForce * 2.2f;
-                speed = speed / 4;
-                Invoke("resetSpeed", 2f);
-            } else if(selectedJump == "ZeroGravJump")
-            {
-                rb.useGravity = false;
-                jumpForce *= 1.15f;
-                Invoke("RestoreGrav", 3.5f);
-            } else if(selectedJump == "Jump")
-            {
-                rb.velocity = Vector3.up * jumpForce;
-            }
+            SimpleAbilities.enabled = true;
+            DynamicAbilities.enabled = false;
+        } else if(selectedClass == classType.Dynamic)
+        {
+            SimpleAbilities.enabled = false;
+            DynamicAbilities.enabled = true;
         }
     }
 
-    
+
+    public void setAbility(string abilityName)
+    {
+        if(selectedClass == classType.Simple)
+        {
+            SimpleAbilities.setAbility(abilityName);
+        }
+        else
+        {
+            //Set the dynamic ability
+        }
+        
+        
+    }
+
+    #endregion
+
+    #region Value Changes
+    public void hurtPlayer(float damage)
+    {
+        health -= damage;
+    }
+
+    #endregion
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(playerFeetPos.position, detectRadius);
     }
 
-    public void RestoreGrav()
-    {
-        rb.useGravity = true;
-    }
-
-    public void setJump(string jumpName)
-    {
-        Debug.Log("Setting Jump to " + jumpName);
-        selectedJump = jumpName;
-    }
-
-    public void hurtPlayer(float damage)
-    {
-        health -= damage;
-    }
-
-    void resetSpeed()
-    {
-        speed = defaultSpeed;
-    }
 }
