@@ -5,11 +5,16 @@ using UnityEngine;
 public class DynamicClassAbilities : MonoBehaviour
 {
     [Header("Selected Abilities")]
-    public string selectedProjectile;
-    public string buffOrMissile;
+    public string selectedProjectile = "Ordnance - Spinning Orb";
+    public string buffOrMissile = "Concentrated Spec - Missile Barrage";
+    public string selectedStatBoost = "Strengthen - Weapon Damage";
+    
 
     [Header("Ability Cooldowns")]
     public float projectileCooldown;
+    public float almightyWaveCooldown;
+    public float splitterCooldown;
+    public float spinningOrbCooldown;
     public float concentratedShotCooldown;
 
 
@@ -26,6 +31,8 @@ public class DynamicClassAbilities : MonoBehaviour
     [SerializeField] GameObject concentratedBullet;
     public float weaponBuffVal;
     public float projectileModifier;
+    [SerializeField] GameObject[] selectedProjectileObject;
+    [SerializeField] GameObject projectileObject;
     public int missileStacks;
     public float missileDelay;
     public float weaponBuffModifier;
@@ -88,9 +95,13 @@ public class DynamicClassAbilities : MonoBehaviour
 
     void CheckForProjectiles()
     {
-        if(projectileCooldown <= 0)
+        //
+        if (Input.GetButtonDown("Projectile"))
         {
-
+            if (projectileCooldown <= 0)
+            {
+                CreateProjectile();
+            }
         }
         //Have switch case for selected ability etc.
     }
@@ -140,7 +151,24 @@ public class DynamicClassAbilities : MonoBehaviour
     #endregion
 
     #region Projectiles and Bombs
+    void CreateProjectile()
+    {
+        //To Do: Create position where the projectile is thrown from
+        GameObject spawnedProjectile = Instantiate(projectileObject);
 
+        switch (selectedProjectile)
+        {
+            case "Ordnance - Spinning Orb":
+                projectileCooldown = spinningOrbCooldown;
+                break;
+            case "Ordnance - Splitter Frag":
+                projectileCooldown = splitterCooldown;
+                break;
+            case "Ordnance - Almighty Wave":
+                projectileCooldown = almightyWaveCooldown;
+                break;
+        }
+    }
     #endregion
 
     #region Post Ability Buffs
